@@ -13,9 +13,21 @@
         <version.junit>4.11</version.junit>
         <version.slf4j-log4j12>1.7.5</version.slf4j-log4j12>
         <version.org.slf4j>1.7.21</version.org.slf4j>
+        <version.ejb.plugin>2.3</version.ejb.plugin>
+
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <version>1.0.2.Final</version>
+            <scope>provided</scope>
+        </dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -46,6 +58,21 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-ejb-plugin</artifactId>
+                <version>${version.ejb.plugin}</version>
+                <configuration>
+                    <!-- Tell Maven we are using EJB 3.1 -->
+                    <ejbVersion>3.1</ejbVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

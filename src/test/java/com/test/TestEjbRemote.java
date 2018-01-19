@@ -17,25 +17,21 @@ public class TestEjbRemote {
     private static Logger logger = LoggerFactory.getLogger(TestEjbRemote.class);
 
     @Test
-    public void testEjb() throws Exception{
+    public void testEjb() throws Exception {
 
         Properties prop = new Properties();
 
         prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
-        prop.put(Context.PROVIDER_URL, "remote://150.88.1.183:4947");
+        prop.put(Context.PROVIDER_URL, "remote://localhost:4447");
         prop.put(Context.SECURITY_PRINCIPAL, "admin");
-        prop.put(Context.SECURITY_CREDENTIALS, "advance$1234");
+        prop.put(Context.SECURITY_CREDENTIALS, "admin$1234");
         prop.put("jboss.naming.client.ejb.context", true);
 
         Context context = new InitialContext(prop);
+        EjbInterface ejbInterface = (EjbInterface) context.lookup("ejb/EjbImpl!com.test.EjbInterface");
+        ejbInterface.test();
 
-        ServicioConsulta servicioConsulta =  (ServicioConsulta)context.lookup("mupi-workflow-ear/mupi-workflow-ejb/ServicioConsultaBean!com.ec.mutualistapichincha.workflow.service.ServicioConsulta");
-
-
-        Double patrimonio = servicioConsulta.obtenerPatrimonioTecnico();
-
-        logger.info("Patrimonio: {}",patrimonio);
-
+        logger.info("ejbInterface {}", ejbInterface);
         context.close();
 
     }
